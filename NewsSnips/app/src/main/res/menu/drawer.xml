@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/settings_category_label"
+        android:id="@+id/categoryGroup">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/itemWorld"
+                    android:checked="false"
+                    android:icon="@drawable/world"
+                    android:title="@string/settings_category_world_label" />
+
+                <item
+                    android:id="@+id/itemSports"
+                    android:checked="false"
+                    android:icon="@drawable/sport"
+                    android:title="@string/settings_category_sport_label" />
+
+                <item
+                    android:id="@+id/itemBusiness"
+                    android:checked="false"
+                    android:icon="@drawable/business"
+                    android:title="@string/settings_category_business_label" />
+
+                <item
+                    android:id="@+id/itemTechnology"
+                    android:checked="false"
+                    android:icon="@drawable/technology"
+                    android:title="@string/settings_category_tech_label" />
+
+                <item
+                    android:id="@+id/itemOpinion"
+                    android:checked="false"
+                    android:icon="@drawable/opinion"
+                    android:title="@string/settings_category_opinion_label" />
+
+                <item
+                    android:id="@+id/itemCulture"
+                    android:checked="false"
+                    android:icon="@drawable/culture"
+                    android:title="@string/settings_category_culture_label" />
+
+                <item
+                    android:id="@+id/itemTravel"
+                    android:checked="false"
+                    android:icon="@drawable/travel"
+                    android:title="@string/settings_category_travel_label" />
+
+                <item
+                    android:id="@+id/itemFootball"
+                    android:checked="false"
+                    android:icon="@drawable/football"
+                    android:title="@string/settings_category_football_label" />
+
+                <item
+                    android:id="@+id/itemFashion"
+                    android:checked="false"
+                    android:icon="@drawable/fashion"
+                    android:title="@string/settings_category_fashion_label" />
+
+                <item
+                    android:id="@+id/itemLifestyle"
+                    android:checked="false"
+                    android:icon="@drawable/lifestyle"
+                    android:title="@string/settings_category_lifestyle_label" />
+
+                <item
+                    android:id="@+id/itemEnvironment"
+                    android:checked="false"
+                    android:icon="@drawable/environment"
+                    android:title="@string/settings_category_environment_label" />
+
+            </group>
+        </menu>
+    </item>
+</menu>
