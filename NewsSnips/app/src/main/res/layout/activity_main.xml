@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:background="@color/colorAccent"
     tools:context="com.androidexample.newssnips.MainActivity">
@@ -17,8 +15,7 @@
         android:id="@+id/drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        >
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -132,7 +129,8 @@
             app:itemTextAppearance="@style/TextAppearance20"
             app:itemTextColor="@drawable/drawer_item"
             app:menu="@menu/drawer"
-            tools:context="com.androidexample.newssnips.app.NavigationDrawerFragment"/>
+            app:itemBackground="@drawable/drawer_selected_item"
+            tools:context="com.androidexample.newssnips.app.NavigationDrawerFragment" />
     </android.support.v4.widget.DrawerLayout>
 
 

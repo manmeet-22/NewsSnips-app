@@ -14,9 +14,10 @@ public final class MathUtils {
 
     /**
      * Truncates a float number {@code f} to {@code decimalPlaces}.
-     * @param f the number to be truncated.
+     *
+     * @param f             the number to be truncated.
      * @param decimalPlaces the amount of decimals that {@code f}
-     * will be truncated to.
+     *                      will be truncated to.
      * @return a truncated representation of {@code f}.
      */
     protected static float truncate(float f, int decimalPlaces) {
@@ -27,6 +28,7 @@ public final class MathUtils {
 
     /**
      * Checks whether two {@link RectF} have the same aspect ratio.
+     *
      * @param r1 the first rect.
      * @param r2 the second rect.
      * @return {@code true} if both rectangles have the same aspect ratio,
@@ -44,6 +46,7 @@ public final class MathUtils {
 
     /**
      * Computes the aspect ratio of a given rect.
+     *
      * @param rect the rect to have its aspect ratio computed.
      * @return the rect aspect ratio.
      */

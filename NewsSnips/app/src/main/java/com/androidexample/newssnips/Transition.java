@@ -9,30 +9,45 @@ import android.view.animation.Interpolator;
 
 public class Transition {
 
-    /** The rect the transition will start from. */
-    private RectF mSrcRect;
-
-    /** The rect the transition will end at. */
-    private RectF mDstRect;
-
-    /** An intermediary rect that changes in every frame according to the transition progress. */
+    /**
+     * An intermediary rect that changes in every frame according to the transition progress.
+     */
     private final RectF mCurrentRect = new RectF();
-
-    /** Precomputed width difference between {@link #mSrcRect} and {@link #mSrcRect}. */
+    /**
+     * The rect the transition will start from.
+     */
+    private RectF mSrcRect;
+    /**
+     * The rect the transition will end at.
+     */
+    private RectF mDstRect;
+    /**
+     * Precomputed width difference between {@link #mSrcRect} and {@link #mSrcRect}.
+     */
     private float mWidthDiff;
-    /** Precomputed height difference between {@link #mSrcRect} and {@link #mSrcRect}. */
+    /**
+     * Precomputed height difference between {@link #mSrcRect} and {@link #mSrcRect}.
+     */
     private float mHeightDiff;
-    /** Precomputed X offset between the center points of
-     * {@link #mSrcRect} and {@link #mSrcRect}. */
+    /**
+     * Precomputed X offset between the center points of
+     * {@link #mSrcRect} and {@link #mSrcRect}.
+     */
     private float mCenterXDiff;
-    /** Precomputed Y offset between the center points of
-     * {@link #mSrcRect} and {@link #mSrcRect}. */
+    /**
+     * Precomputed Y offset between the center points of
+     * {@link #mSrcRect} and {@link #mSrcRect}.
+     */
     private float mCenterYDiff;
 
-    /** The duration of the transition in milliseconds. The default duration is 5000 ms. */
+    /**
+     * The duration of the transition in milliseconds. The default duration is 5000 ms.
+     */
     private long mDuration;
 
-    /** The {@link Interpolator} used to perform the transitions between rects. */
+    /**
+     * The {@link Interpolator} used to perform the transitions between rects.
+     */
     private Interpolator mInterpolator;
 
 
@@ -55,6 +70,7 @@ public class Transition {
 
     /**
      * Gets the rect that will take the scene when a Ken Burns transition starts.
+     *
      * @return the rect that starts the transition.
      */
     public RectF getSourceRect() {
@@ -64,6 +80,7 @@ public class Transition {
 
     /**
      * Gets the rect that will take the scene when a Ken Burns transition ends.
+     *
      * @return the rect that ends the transition.
      */
     public RectF getDestinyRect() {
@@ -74,6 +91,7 @@ public class Transition {
     /**
      * Gets the current rect that represents the part of the image to take the scene
      * in the current frame.
+     *
      * @param elapsedTime the elapsed time since this transition started.
      */
     public RectF getInterpolatedRect(long elapsedTime) {
@@ -98,6 +116,7 @@ public class Transition {
 
     /**
      * Gets the duration of this transition.
+     *
      * @return the duration, in milliseconds.
      */
     public long getDuration() {

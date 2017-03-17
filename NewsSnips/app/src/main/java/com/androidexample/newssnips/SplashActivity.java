@@ -28,12 +28,12 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v("kenburns","SplashActivity opened");
+        Log.v("kenburns", "SplashActivity opened");
         setContentView(R.layout.activity_splash);
         setAnimation();
 
-        TextView text=(TextView)findViewById(R.id.welcome_text);
-        Typeface typeface= Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+        TextView text = (TextView) findViewById(R.id.welcome_text);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
         text.setTypeface(typeface);
 
         mKenBurns = (KenBurnsView) findViewById(R.id.ken_burns_images);
@@ -50,7 +50,7 @@ public class SplashActivity extends Activity {
             }
         }, SPLASH_TIME_OUT);
 
-        RelativeLayout splash= (RelativeLayout)findViewById(R.id.splash_layout);
+        RelativeLayout splash = (RelativeLayout) findViewById(R.id.splash_layout);
         splash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

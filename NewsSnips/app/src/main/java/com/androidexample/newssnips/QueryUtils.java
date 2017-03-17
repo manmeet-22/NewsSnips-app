@@ -36,7 +36,7 @@ public final class QueryUtils {
     private static final String TAG_URL = "shortUrl";
     private static final String TAG_IMAGE = "thumbnail";
     private static final String TAG_CONTRIBUTOR = "byline";
-    private static final String TAG_STARS= "starRating";
+    private static final String TAG_STARS = "starRating";
 
     private static List<News> extractFeatureFromJson(String newsJSON) {
         // If the JSON string is empty or null, then return early.
@@ -66,48 +66,47 @@ public final class QueryUtils {
                 // Get a single news at position i within the list of news
                 JSONObject currentNews = newsArray.getJSONObject(i);
 
-                String headline, content="No Content", date,url,imageUrl="https://placeholdit.imgix.net/~text?txtsize=26&txt=No+preview&w=350&h=215",stars="0",section,contributor="No info";
+                String headline, content = "No Content", date, url, imageUrl = "https://placeholdit.imgix.net/~text?txtsize=26&txt=No+preview&w=350&h=215", stars = "0", section, contributor = "No info";
 
                 JSONObject newsDetails = currentNews.getJSONObject("fields");
 
                 headline = (newsDetails.getString(TAG_HEADLINE));
-               if(newsDetails.has(TAG_CONTENT)){
-                   content = newsDetails.getString(TAG_CONTENT);
-                   content= Html.fromHtml(content).toString();
-               }
+                if (newsDetails.has(TAG_CONTENT)) {
+                    content = newsDetails.getString(TAG_CONTENT);
+                    content = Html.fromHtml(content).toString();
+                }
                 date = newsDetails.getString(TAG_PUB_DATE);
-                date= date.replace("T"," ");
-                date= date.replace("Z","");
+                date = date.replace("T", " ");
+                date = date.replace("Z", "");
                 url = newsDetails.getString(TAG_URL);
 
-                if(newsDetails.has(TAG_IMAGE)){
-                        imageUrl = newsDetails.getString(TAG_IMAGE);
+                if (newsDetails.has(TAG_IMAGE)) {
+                    imageUrl = newsDetails.getString(TAG_IMAGE);
                 }
-                if(newsDetails.has(TAG_CONTRIBUTOR)) {
+                if (newsDetails.has(TAG_CONTRIBUTOR)) {
                     contributor = newsDetails.getString(TAG_CONTRIBUTOR);
                 }
 
-                if(newsDetails.has(TAG_STARS))
-                {
-                    stars= newsDetails.getString(TAG_STARS);
+                if (newsDetails.has(TAG_STARS)) {
+                    stars = newsDetails.getString(TAG_STARS);
                 }
 
                 Log.v(TAG_HEADLINE, headline);
-            //    Log.v(TAG_CONTENT, content);
+                //    Log.v(TAG_CONTENT, content);
                 Log.v(TAG_PUB_DATE, date);
                 Log.v(TAG_URL, url);
                 Log.v(TAG_IMAGE, imageUrl);
-               Log.v(TAG_CONTRIBUTOR,contributor);
-                Log.v(TAG_STARS,stars);
+                Log.v(TAG_CONTRIBUTOR, contributor);
+                Log.v(TAG_STARS, stars);
 
 //                News newsSend = new News(headline, content, date, url, imageUrl,contributor,section,stars);
 
-                News newsSend = new News(headline, content, date, url, imageUrl,contributor);
+                News newsSend = new News(headline, content, date, url, imageUrl, contributor);
 
                 // Add the new {@link News} to the list of news.
                 news.add(newsSend);
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
@@ -199,24 +198,23 @@ public final class QueryUtils {
 
     public static List<News> fetchBooksData(String requestURL) {
 
-        Log.i(LOG_TAG,"fetchBookData called");
+        Log.i(LOG_TAG, "fetchBookData called");
        /*try {
             Thread.sleep(15000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
 
-        URL url= createUrl(requestURL);
+        URL url = createUrl(requestURL);
 
-        String jsonResponse =null;
-        try{
-            jsonResponse= makeHttpRequest(url);
-        }
-        catch (IOException e){
-            Log.e(LOG_TAG, "Problem making HTTP request.",e);
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making HTTP request.", e);
         }
 
-        List<News> news =extractFeatureFromJson(jsonResponse);
+        List<News> news = extractFeatureFromJson(jsonResponse);
         return news;
     }
 }

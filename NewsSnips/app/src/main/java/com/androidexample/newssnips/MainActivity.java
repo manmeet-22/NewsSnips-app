@@ -4,6 +4,7 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,6 +14,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,6 +32,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,12 +56,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public NetworkInfo networkInfo;
     public TextView showMore;
     public int size = 10;
+    public TextView dummy;
     private NewsAdapter mAdapter;
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    public TextView dummy;
-
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -69,13 +78,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         newsListView = (ListView) findViewById(R.id.list);
         noNet = (ImageView) findViewById(R.id.no_net_image);
         noResult = (ImageView) findViewById(R.id.no_result);
-     // input = (EditText) findViewById(R.id.editText);
+        // input = (EditText) findViewById(R.id.editText);
         showMore = (TextView) findViewById(R.id.show_more);
-        final SwipeRefreshLayout swipe =(SwipeRefreshLayout)findViewById(R.id.swipe);
-        dummy =(TextView)findViewById(R.id.dummy);
+        final SwipeRefreshLayout swipe = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        dummy = (TextView) findViewById(R.id.dummy);
+        ColorStateList itemTextColor = null;
 
         mProgressBar.setVisibility(View.GONE);
-    //    mProgressBar.getIndeterminateDrawable().setColorFilter(Color.rgb(238, 238, 238), PorterDuff.Mode.MULTIPLY);
+        //    mProgressBar.getIndeterminateDrawable().setColorFilter(Color.rgb(238, 238, 238), PorterDuff.Mode.MULTIPLY);
         noNet.setVisibility(View.GONE);
         noResult.setVisibility(View.GONE);
         showMore.setVisibility(View.VISIBLE);
@@ -83,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(Color.rgb(228,80,79));
-        swipe.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary );
+        toolbar.setTitleTextColor(Color.rgb(228, 80, 79));
+        swipe.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary);
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -93,20 +103,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 (new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                    swipe.setRefreshing(false);
+                        swipe.setRefreshing(false);
                         drawerOptionClick();
                     }
-                },1000);
+                }, 1000);
             }
-            });
-                /*  new Handler().postDelayed(new Runnable() {
-                                              @Override
-                                              public void run() {
-                                                  drawerOptionClick();
-                                                  swipe.setRefreshing(false);
-                                              });
-                                          }
-              */  // refreshContent();
+        });
 
         //When Runnung App for the first time or the home icon is clicked ,this function shows the combined news results
         drawerOptionClick();
@@ -114,10 +116,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         showMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(size<50){
-                    size+=10;
-                }
-                else{
+                if (size < 50) {
+                    size += 10;
+                } else {
                     dummy.setVisibility(View.GONE);
                     showMore.setVisibility(View.GONE);
                 }
@@ -127,10 +128,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //Initializing NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setItemIconTintList(null);
+        itemTextColor = navigationView.getItemTextColor();
+        navigationView.setItemTextColor(itemTextColor);
         Menu menu = navigationView.getMenu();
 
-        //For chnaging the textColor and textSize of group's Name ie. Category
-        MenuItem categoryName= menu.findItem(R.id.categoryGroup);
+        //For chnaging the textColor and textSize of
+        // group's Name ie. Category
+        MenuItem categoryName = menu.findItem(R.id.categoryGroup);
         SpannableString s = new SpannableString(categoryName.getTitle());
         s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance25), 0, s.length(), 0);
 
@@ -243,14 +247,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //calling sync state is necessay or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    private void basicDefaults(){
-        size=10;
+    private void basicDefaults() {
+        size = 10;
         dummy.setVisibility(View.VISIBLE);
         showMore.setVisibility(View.VISIBLE);
         drawerOptionClick();
     }
+
     private void drawerOptionClick() {
 
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -272,10 +280,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             });
             sbView = snackbar.getView();
-            sbView.setBackgroundColor(Color.rgb(0,0,0));
+            sbView.setBackgroundColor(Color.rgb(0, 0, 0));
             snackbar.setActionTextColor(Color.rgb(255, 241, 118));
             TextView snackberText = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            snackberText.setTextColor(Color.rgb(228,80,79));
+            snackberText.setTextColor(Color.rgb(228, 80, 79));
             snackbar.show();
             connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -289,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         newsListView.setVisibility(View.VISIBLE);
 
         ContentFragment fragment = new ContentFragment();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment);
         fragmentTransaction.commit();
 
@@ -350,10 +358,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             });
             sbView = snackbar.getView();
-            sbView.setBackgroundColor(Color.rgb(0,0,0));
+            sbView.setBackgroundColor(Color.rgb(0, 0, 0));
             snackbar.setActionTextColor(Color.rgb(255, 241, 118));
             TextView snackberText = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            snackberText.setTextColor(Color.rgb(228,80,79));
+            snackberText.setTextColor(Color.rgb(228, 80, 79));
             snackbar.show();
             Log.i(LOG_TAG, "No Internet");
         }
@@ -369,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Uri baseUri = Uri.parse(GAURDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        uriBuilder.appendQueryParameter("format","json");
+        uriBuilder.appendQueryParameter("format", "json");
         uriBuilder.appendQueryParameter("page-size", String.valueOf(size));
         uriBuilder.appendQueryParameter("show-fields", "standfirst,starRating,headline,thumbnail,short-url,bodyText,lastModified,byline");
 
@@ -391,10 +399,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             });
             sbView = snackbar.getView();
-            sbView.setBackgroundColor(Color.rgb(0,0,0));
+            sbView.setBackgroundColor(Color.rgb(0, 0, 0));
             snackbar.setActionTextColor(Color.rgb(255, 241, 118));
             TextView snackberText = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            snackberText.setTextColor(Color.rgb(228,80,79));
+            snackberText.setTextColor(Color.rgb(228, 80, 79));
             snackbar.show();
 
             coordinatorLayoutView.setVisibility(View.VISIBLE);
@@ -408,10 +416,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             });
             sbView = snackbar.getView();
-            sbView.setBackgroundColor(Color.rgb(0,0,0));
+            sbView.setBackgroundColor(Color.rgb(0, 0, 0));
             snackbar.setActionTextColor(Color.rgb(255, 241, 118));
             TextView snackberText = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            snackberText.setTextColor(Color.rgb(228,80,79));
+            snackberText.setTextColor(Color.rgb(228, 80, 79));
             snackbar.show();
         }
         mProgressBar.setVisibility(View.GONE);

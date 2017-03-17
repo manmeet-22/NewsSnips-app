@@ -18,7 +18,6 @@
         <item name="color">@color/colorAccent</item>
     </style>
 
-
     <style name="TextAppearance25">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">25sp</item>
@@ -32,6 +31,5 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 
 </resources>
